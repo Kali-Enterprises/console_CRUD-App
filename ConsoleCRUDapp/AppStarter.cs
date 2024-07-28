@@ -8,6 +8,8 @@ namespace ConsoleCRUDapp
         {
             Utilities.ConsoleUtility.SetConsoleFont();
 
+            Views.MenuView.ShowStudentMenu();
+
             Console.ReadLine();
         }
     }

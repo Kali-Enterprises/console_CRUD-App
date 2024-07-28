@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Runtime.InteropServices;
 
 namespace ConsoleCRUDapp.Utilities
@@ -46,9 +47,23 @@ namespace ConsoleCRUDapp.Utilities
         /// Font type
         /// </summary>
         private const int TMPF_TRUETYPE = 0x04;
+
+        /// <summary>
+        /// Get Font File Path from app.config file
+        /// </summary>
+        private static string fontPath = ConfigurationManager.AppSettings["ConsoleFontPath"];
+
+        /// <summary>
+        /// Get Font File Name from app.config file
+        /// </summary>
+        private static string fontName = ConfigurationManager.AppSettings["ConsoleFontName"];
         #endregion
 
         #region Methods
+
+        [DllImport("gdi32.dll")]
+        private static extern int AddFontResource(string lpFileName);
+
         /// <summary>
         /// Setting up the current console font
         /// </summary>
@@ -75,20 +90,51 @@ namespace ConsoleCRUDapp.Utilities
         {
             try
             {
-                string fontName = "JetBrains Mono Medium";
-                IntPtr hnd = GetStdHandle(STD_OUTPUT_HANDLE);
-                CONSOLE_FONT_INFO_EX cfi = new CONSOLE_FONT_INFO_EX();
-                cfi.cbSize = Marshal.SizeOf(cfi);
-                cfi.FontFamily = TMPF_TRUETYPE;
-                cfi.FaceName = fontName;
-                cfi.dwFontSize = new Coord(9, 18); // Adjust the font size if needed
-                cfi.FontWeight = 400;
+                if (!string.IsNullOrEmpty(fontPath) && !string.IsNullOrEmpty(fontName))
+                {
+                    // Add the font to the system
+                    if (AddFontResource(fontPath) > 0)
+                    {
+                        // Set the console font
+                        SetConsoleFont(fontName);
+                        // Console.WriteLine($"Font set to {fontName}");
+                    }
+                    else
+                    {
+                        throw new Exception("Failed to add font.");
+                    }
+                    /*
+                    IntPtr hnd = GetStdHandle(STD_OUTPUT_HANDLE);
+                    CONSOLE_FONT_INFO_EX cfi = new CONSOLE_FONT_INFO_EX();
+                    cfi.cbSize = Marshal.SizeOf(cfi);
+                    cfi.FontFamily = TMPF_TRUETYPE;
+                    cfi.FaceName = fontName;
+                    cfi.dwFontSize = new Coord(9, 18); // Adjust the font size if needed
+                    cfi.FontWeight = 400;
 
-                SetCurrentConsoleFontEx(hnd, false, ref cfi);
+                    SetCurrentConsoleFontEx(hnd, false, ref cfi);
+                    */
+                }
+                else
+                {
+                    //Console.WriteLine("Font path or font name is not configured.");
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception($"\nDeveloperConsole.ConsoleUtility.SetConsoleFont()::{ex.Message}");
+            }
+        }
+        public static void SetConsoleFont(string fontName)
+        {
+            IntPtr hnd = GetStdHandle(STD_OUTPUT_HANDLE);
+            if (hnd != IntPtr.Zero)
+            {
+                CONSOLE_FONT_INFO_EX fontInfo = new CONSOLE_FONT_INFO_EX();
+                fontInfo.cbSize = Marshal.SizeOf(fontInfo);
+                fontInfo.FaceName = fontName;
+                fontInfo.FontFamily = TMPF_TRUETYPE;
+                SetCurrentConsoleFontEx(hnd, false, ref fontInfo);
             }
         }
 
