@@ -8,14 +8,24 @@ namespace ConsoleCRUDapp
     {
         static void Main(string[] args)
         {
-            Utilities.ConsoleUtility.SetConsoleFont();
+			try
+			{
+                Utilities.ConsoleUtility.SetConsoleFont();
 
-            Views.MenuView.ShowStudentMenu();
+                //Views.MenuView.ShowStudentMenu();
 
-            DaStudent.AddStudent(DaStudent.SetStudentData());
-            DaStudent.ListAllStudents();
+                // DaStudent.AddStudent(DaStudent.SetStudentData());
+                Utilities.TableGenerator.DisplayTable(DaStudent.ListAllStudents());
 
-            Console.ReadLine();
+                Console.ReadLine();
+            }
+			catch (Exception ex)
+			{
+                Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine(ex.Message.ToString());
+                Console.ResetColor();
+                Console.ReadLine();
+			}
         }
     }
 }

@@ -116,5 +116,8 @@
   <ItemGroup>
     <Folder Include="Views\StudentViews\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Utilities\ASCII_CharMap.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

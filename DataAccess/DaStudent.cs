@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MasterClass;
 
@@ -54,22 +55,20 @@ namespace DataAccess
         /// Display all Records of students
         /// </summary>
         /// <exception cref="Exception"></exception>
-        public static void ListAllStudents()
+        public static List<StudentModel> ListAllStudents()
         {
+            //objJSONService = new JsonServices<StudentModel>(jPath);
             try
             {
-                if(objJSONService != null)
+                if(objJSONService == null)
                 {
-                    // List all students from JSON file
-                    Console.WriteLine("Students from JSON:");
-                    foreach(var student in objJSONService.GetAll())
-                    {
-                        Console.WriteLine($"\t [ {student.Id} ]\t [ {student.Name} ] :: {student.UserName} | {student.Email} | {student.Age} ]");
-                    }
+                    throw new Exception("#ERROR OCCURRED!!!\n\tObjects are empty, No Data found !!!");
                 }
                 else
                 {
-                    throw new Exception("#ERROR OCCURRED!!!\n\tObjects are empty, No Data found !!!");
+                    // List all students from JSON file
+                    Console.WriteLine("Students from JSON:");
+                    return objJSONService.GetAll();
                 }
             }
             catch(Exception ex)

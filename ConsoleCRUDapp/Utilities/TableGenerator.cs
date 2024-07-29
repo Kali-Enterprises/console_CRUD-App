@@ -36,20 +36,27 @@ namespace ConsoleCRUDapp.Utilities
                 int emailMaxLength = Math.Max("Email".Length, students.Max(s => s.Email?.Length ?? 0));
                 int ageMaxLength = Math.Max("Age".Length, students.Max(s => s.Age.ToString().Length));
 
-                string horizontalSeparator = $"+-{new string('-', idMaxLength)}-+-{new string('-', nameMaxLength)}-+-{new string('-', usernameMaxLength)}-+-{new string('-', emailMaxLength)}-+-{new string('-', ageMaxLength)}-+";
+                string horizontalSeparatorUp = $"\t┌─{new string('─', idMaxLength)}─┬─{new string('─', nameMaxLength)}─┬─{new string('─', usernameMaxLength)}─┬─{new string('─', emailMaxLength)}─┬─{new string('─', ageMaxLength)}─┐";
+                string horizontalSeparatorMid = $"\t├─{new string('─', idMaxLength)}─┼─{new string('─', nameMaxLength)}─┼─{new string('─', usernameMaxLength)}─┼─{new string('─', emailMaxLength)}─┼─{new string('─', ageMaxLength)}─┤";
+                string horizontalSeparatorDown = $"\t└─{new string('─', idMaxLength)}─┴─{new string('─', nameMaxLength)}─┴─{new string('─', usernameMaxLength)}─┴─{new string('─', emailMaxLength)}─┴─{new string('─', ageMaxLength)}─┘";
 
                 // Print the header
-                Console.WriteLine(horizontalSeparator);
-                Console.WriteLine($"| {"Id".PadCenter(idMaxLength)} | {"Name".PadCenter(nameMaxLength)} | {"Username".PadCenter(usernameMaxLength)} | {"Email".PadCenter(emailMaxLength)} | {"Age".PadCenter(ageMaxLength)} |");
-                Console.WriteLine(horizontalSeparator);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.WriteLine(horizontalSeparatorUp);
+                Console.WriteLine($"\t│ {"Id".PadCenter(idMaxLength)} │ {"Name".PadCenter(nameMaxLength)} │ {"Username".PadCenter(usernameMaxLength)} │ {"Email".PadCenter(emailMaxLength)} │ {"Age".PadCenter(ageMaxLength)} │");
+                Console.WriteLine(horizontalSeparatorMid);
+                Console.ResetColor();
 
+                Console.ForegroundColor = ConsoleColor.Blue;
                 // Print each student
-                foreach(var student in students)
+                foreach (var student in students)
                 {
-                    Console.WriteLine($"| {student.Id.ToString().PadCenter(idMaxLength)} | {student.Name.PadCenter(nameMaxLength)} | {student.UserName.PadCenter(usernameMaxLength)} | {student.Email?.PadCenter(emailMaxLength) ?? new string(' ', emailMaxLength)} | {student.Age.ToString().PadCenter(ageMaxLength)} |");
+                    Console.WriteLine($"\t│ {student.Id.ToString().PadCenter(idMaxLength)} │ {student.Name.PadCenter(nameMaxLength)} │ {student.UserName.PadCenter(usernameMaxLength)} │ {student.Email?.PadCenter(emailMaxLength) ?? new string(' ', emailMaxLength)} │ {student.Age.ToString().PadCenter(ageMaxLength)} │");
                 }
 
-                Console.WriteLine(horizontalSeparator);
+                Console.WriteLine(horizontalSeparatorDown);
+                Console.ResetColor();
             }
             catch(Exception ex)
             {
