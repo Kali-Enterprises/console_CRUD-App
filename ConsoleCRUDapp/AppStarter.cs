@@ -1,4 +1,6 @@
 ﻿using System;
+using DataAccess;
+using MasterClass;
 
 namespace ConsoleCRUDapp
 {
@@ -9,6 +11,9 @@ namespace ConsoleCRUDapp
             Utilities.ConsoleUtility.SetConsoleFont();
 
             Views.MenuView.ShowStudentMenu();
+
+            DaStudent.AddStudent(DaStudent.SetStudentData());
+            DaStudent.ListAllStudents();
 
             Console.ReadLine();
         }

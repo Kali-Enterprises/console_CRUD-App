@@ -34,7 +34,20 @@ namespace ConsoleCRUDapp.Views
     [5] {StudentMenu[5]}
         [ OPTION ] ::: ";
             Console.WriteLine(menu);
-            Console.SetCursorPosition(35, 12);
+            // Console.SetCursorPosition(35, 12);
+
+            int option_ = int.Parse(Console.ReadLine());
+            switch(option_)
+            {
+                case 1:
+                    //
+                    break;
+                case 2:
+                    //
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

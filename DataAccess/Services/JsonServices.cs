@@ -10,8 +10,16 @@ namespace DataAccess
 {
     public class JsonServices<T>
     {
+        /// <summary>
+        /// JSON file path which is used as a DataBase
+        /// </summary>
         private readonly string _filePath;
 
+        /// <summary>
+        /// Constructor method for JsonServices<T> Service Class
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <exception cref="Exception"></exception>
         public JsonServices(string filePath)
         {
             try
@@ -20,10 +28,15 @@ namespace DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception($"\nDataAccess.JsonServices<T>.JsonServices[CONSTRUCTOR]::{ex.Message}");
+                throw new Exception($"\nDataAccess.Services.JsonServices<T>.JsonServices[CONSTRUCTOR]::{ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Method to get all Records from JSON File
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public List<T> GetAll()
         {
             try
@@ -35,10 +48,16 @@ namespace DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception($"\nDataAccess.JsonServices<T>.GetAll()::{ex.Message}");
+                throw new Exception($"\nDataAccess.Services.JsonServices<T>.GetAll()::{ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Method to get Record from JSON File where id is equivalent to user input
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns><![CDATA[T: where T is any type of value]]></returns>
+        /// <exception cref="Exception"></exception>
         public T GetById(int id)
         {
             try
@@ -48,10 +67,15 @@ namespace DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception($"\nDataAccess.JsonServices<T>.GetById()::{ex.Message}");
+                throw new Exception($"\nDataAccess.Services.JsonServices<T>.GetById()::{ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Create and Add New Record into JSON File
+        /// </summary>
+        /// <param name="item"></param>
+        /// <exception cref="Exception"></exception>
         public void Add(T item)
         {
             try
@@ -62,10 +86,15 @@ namespace DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception($"\nDataAccess.JsonServices<T>.Add()::{ex.Message}");
+                throw new Exception($"\nDataAccess.Services.JsonServices<T>.Add()::{ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Update and Add Existing Record into JSON File
+        /// </summary>
+        /// <param name="item"></param>
+        /// <exception cref="Exception"></exception>
         public void Update(T item)
         {
             try
@@ -80,11 +109,17 @@ namespace DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception($"\nDataAccess.JsonServices<T>.Update()::{ex.Message}");
+                throw new Exception($"\nDataAccess.Services.JsonServices<T>.Update()::{ex.Message}");
             }
         }
 
-        public void Delete(int id)
+        /// <summary>
+        /// Delete Record from JSON File
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns><![CDATA[True if record deleted successfully otherwise it returns False]]></returns>
+        /// <exception cref="Exception"></exception>
+        public bool Delete(int id)
         {
             try
             {
@@ -94,11 +129,17 @@ namespace DataAccess
                 {
                     items.Remove(item);
                     File.WriteAllText(_filePath, JsonConvert.SerializeObject(items, Formatting.Indented));
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"\nDataAccess.JsonServices<T>.Delete()::{ex.Message}");
+                return false;
+                throw new Exception($"\nDataAccess.Services.JsonServices<T>.Delete()::{ex.Message}");
             }
         }
     }

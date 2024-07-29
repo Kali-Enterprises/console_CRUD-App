@@ -47,16 +47,74 @@
     <Compile Include="AppStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ConsoleUtility.cs" />
+    <Compile Include="Utilities\TableGenerator.cs" />
     <Compile Include="Views\MenuView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-Bold.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-BoldItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-ExtraBold.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-ExtraBoldItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-ExtraLight.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-ExtraLightItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-Italic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-Light.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-LightItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-Medium.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-MediumItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-Regular.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-SemiBold.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-SemiBoldItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-Thin.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMono-ThinItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-Bold.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-BoldItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-ExtraBold.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-ExtraBoldItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-ExtraLight.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-ExtraLightItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-Italic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-Light.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-LightItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-Medium.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-MediumItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-Regular.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-SemiBold.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-SemiBoldItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-Thin.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\ttf\JetBrainsMonoNL-ThinItalic.ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\variable\JetBrainsMono-Italic[wght].ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\variable\JetBrainsMono[wght].ttf" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-Bold.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-BoldItalic.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-ExtraBold.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-ExtraBoldItalic.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-ExtraLight.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-ExtraLightItalic.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-Italic.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-Light.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-LightItalic.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-Medium.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-MediumItalic.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-Regular.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-SemiBold.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-SemiBoldItalic.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-Thin.woff2" />
+    <None Include="Utilities\JetBrainsMono-2.304\fonts\webfonts\JetBrainsMono-ThinItalic.woff2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{69f1ff81-96ab-4374-b2b4-68e130632e89}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MasterClass\MasterClass.csproj">
+      <Project>{26e6379a-2b1e-44c4-8d1a-5ff43aa52197}</Project>
+      <Name>MasterClass</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\StudentViews\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

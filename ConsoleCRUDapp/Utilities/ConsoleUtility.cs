@@ -134,6 +134,9 @@ namespace ConsoleCRUDapp.Utilities
                 fontInfo.cbSize = Marshal.SizeOf(fontInfo);
                 fontInfo.FaceName = fontName;
                 fontInfo.FontFamily = TMPF_TRUETYPE;
+                fontInfo.dwFontSize = new Coord(9, 18); // Adjust the font size if needed
+                fontInfo.FontWeight = 400;
+
                 SetCurrentConsoleFontEx(hnd, false, ref fontInfo);
             }
         }
