@@ -96,7 +96,7 @@ namespace ConsoleCRUDapp.Utilities
                     if (AddFontResource(fontPath) > 0)
                     {
                         // Set the console font
-                        SetConsoleFont(fontName);
+                        SetConsoleFontByFontName(fontName);
                         // Console.WriteLine($"Font set to {fontName}");
                     }
                     else
@@ -117,27 +117,36 @@ namespace ConsoleCRUDapp.Utilities
                 }
                 else
                 {
-                    //Console.WriteLine("Font path or font name is not configured.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Font path or font name is not configured.");
+                    Console.ResetColor();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"\nDeveloperConsole.ConsoleUtility.SetConsoleFont()::{ex.Message}");
+                throw new Exception($"\nConsoleCRUDapp.Utilities.ConsoleUtilities.SetConsoleFont()::{ex.Message}");
             }
         }
-        public static void SetConsoleFont(string fontName)
+        public static void SetConsoleFontByFontName(string fontName)
         {
-            IntPtr hnd = GetStdHandle(STD_OUTPUT_HANDLE);
-            if (hnd != IntPtr.Zero)
+            try
             {
-                CONSOLE_FONT_INFO_EX fontInfo = new CONSOLE_FONT_INFO_EX();
-                fontInfo.cbSize = Marshal.SizeOf(fontInfo);
-                fontInfo.FaceName = fontName;
-                fontInfo.FontFamily = TMPF_TRUETYPE;
-                fontInfo.dwFontSize = new Coord(9, 18); // Adjust the font size if needed
-                fontInfo.FontWeight = 400;
+                IntPtr hnd = GetStdHandle(STD_OUTPUT_HANDLE);
+                if (hnd != IntPtr.Zero)
+                {
+                    CONSOLE_FONT_INFO_EX fontInfo = new CONSOLE_FONT_INFO_EX();
+                    fontInfo.cbSize = Marshal.SizeOf(fontInfo);
+                    fontInfo.FaceName = fontName;
+                    fontInfo.FontFamily = TMPF_TRUETYPE;
+                    fontInfo.dwFontSize = new Coord(9, 18); // Adjust the font size if needed
+                    fontInfo.FontWeight = 400;
 
-                SetCurrentConsoleFontEx(hnd, false, ref fontInfo);
+                    SetCurrentConsoleFontEx(hnd, false, ref fontInfo);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"\nConsoleCRUDapp.Utilities.ConsoleUtilities.SetConsoleFontByFontName()::{ex.Message}");
             }
         }
 
@@ -171,13 +180,13 @@ namespace ConsoleCRUDapp.Utilities
                 }
                 else
                 {
-                    throw new Exception($"\nDeveloperConsole.ConsoleUtility.ShowBanner()::[ Banner Text should not be blank or null !!! ]");
+                    throw new Exception($"[ Banner Text should not be blank or null !!! ]");
                 }
                 Console.WriteLine(banner);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"\nConsoleCRUDapp.Utilities.ConsoleUtilities.ShowBanner()::{ex.Message}");
             }
         }
 
@@ -209,7 +218,7 @@ namespace ConsoleCRUDapp.Utilities
                     string bottomPart = $"{new string(' ', margin)}╚{new string('═', totalLength)}╝"; //    ╚═══════════════════╝
 
                     // Final Banner String
-                    banner = $"{upperPart}\n{middlePart}\n{bottomPart}\n\n";
+                    banner = $"\n{upperPart}\n{middlePart}\n{bottomPart}\n";
                 }
                 else
                 {
@@ -232,7 +241,7 @@ namespace ConsoleCRUDapp.Utilities
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"\nConsoleCRUDapp.Utilities.ConsoleUtilities.ShowBanner()::{ex.Message}");
             }
         }
         #endregion

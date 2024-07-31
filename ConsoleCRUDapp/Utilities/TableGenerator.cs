@@ -14,14 +14,14 @@ namespace ConsoleCRUDapp.Utilities
     {
 
         /// <summary>
-        /// Displays the model records as in table format
+        /// Displays the student model records as in table format
         /// </summary>
         /// <param name="students"></param>
-        public static void DisplayTable(List<StudentModel> students)
+        public static void DisplayStudentTable(List<StudentModel> students)
         {
             try
             {
-                if(students == null || !students.Any())
+                if (students == null || !students.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\n\tNo students available to display.");
@@ -41,18 +41,19 @@ namespace ConsoleCRUDapp.Utilities
                 string horizontalSeparatorDown = $"\t└─{new string('─', idMaxLength)}─┴─{new string('─', nameMaxLength)}─┴─{new string('─', usernameMaxLength)}─┴─{new string('─', emailMaxLength)}─┴─{new string('─', ageMaxLength)}─┘";
 
                 // Print the header
+                Console.WriteLine("\n");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.BackgroundColor = ConsoleColor.Gray;
                 Console.WriteLine(horizontalSeparatorUp);
                 Console.WriteLine($"\t│ {"Id".PadCenter(idMaxLength)} │ {"Name".PadCenter(nameMaxLength)} │ {"Username".PadCenter(usernameMaxLength)} │ {"Email".PadCenter(emailMaxLength)} │ {"Age".PadCenter(ageMaxLength)} │");
                 Console.WriteLine(horizontalSeparatorMid);
                 Console.ResetColor();
 
-                Console.ForegroundColor = ConsoleColor.Blue;
                 // Print each student
                 foreach (var student in students)
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"\t│ {student.Id.ToString().PadCenter(idMaxLength)} │ {student.Name.PadCenter(nameMaxLength)} │ {student.UserName.PadCenter(usernameMaxLength)} │ {student.Email?.PadCenter(emailMaxLength) ?? new string(' ', emailMaxLength)} │ {student.Age.ToString().PadCenter(ageMaxLength)} │");
+                    Console.ResetColor();
                 }
 
                 Console.WriteLine(horizontalSeparatorDown);

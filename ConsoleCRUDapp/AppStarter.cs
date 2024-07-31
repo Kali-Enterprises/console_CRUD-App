@@ -12,10 +12,9 @@ namespace ConsoleCRUDapp
 			{
                 Utilities.ConsoleUtility.SetConsoleFont();
 
-                //Views.MenuView.ShowStudentMenu();
-
+                // Views.MenuView.ShowStudentMenu();
+                Views.MenuView.RootMenuDisplay();
                 // DaStudent.AddStudent(DaStudent.SetStudentData());
-                Utilities.TableGenerator.DisplayTable(DaStudent.ListAllStudents());
 
                 Console.ReadLine();
             }

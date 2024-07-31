@@ -7,15 +7,9 @@ namespace DataAccess
 {
     public class DaStudent
     {
-        public static StudentModel _stdModel;
         private static string jPath = "students.json";
-
-        private static JsonServices<StudentModel> objJSONService;
-
-        public DaStudent()
-        {
-            objJSONService = new JsonServices<StudentModel>(jPath);
-        }
+        public static StudentModel _stdModel;
+        private static JsonServices<StudentModel> objJSONService = new JsonServices<StudentModel>(jPath);
 
         /// <summary>
         /// Setting up the Student Data for next Manipulation
@@ -57,39 +51,159 @@ namespace DataAccess
         /// <exception cref="Exception"></exception>
         public static List<StudentModel> ListAllStudents()
         {
-            //objJSONService = new JsonServices<StudentModel>(jPath);
             try
             {
-                if(objJSONService == null)
+                if (objJSONService == null)
                 {
-                    throw new Exception("#ERROR OCCURRED!!!\n\tObjects are empty, No Data found !!!");
+                    objJSONService = new JsonServices<StudentModel>(jPath);
+                    return objJSONService.GetAll();
                 }
                 else
                 {
-                    // List all students from JSON file
-                    Console.WriteLine("Students from JSON:");
                     return objJSONService.GetAll();
                 }
+                // throw new Exception("#ERROR OCCURRED!!!\n\tObjects are empty, No Data found !!!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"DataAccess.DaStudent.ListAllStudents()::{ex.Message}");
             }
         }
+        // ----------------------------------------------------------------------------------------
+        /// <summary>
+        /// Getting Multiple Filtered Records
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns><![CDATA[List<int> ListOfIds]]></returns>
+        /// <exception cref="Exception"></exception>
+        public static List<int> GetStudentIdsByName(string name)
+        {
+            try
+            {
+                if (objJSONService == null)
+                {
+                    objJSONService = new JsonServices<StudentModel>(jPath);
+                }
+                var students = objJSONService.GetAll();
+                if (!String.IsNullOrEmpty(name))
+                {
+                    var matchingStudents = students
+                        .Where(s => s.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                        .Select(s => s.Id)
+                        .ToList();
+                    return matchingStudents;
+                }
+                return new List<int>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"\nDataAccess.DaStudent.GetStudentIdsByName()::{ex.Message}");
+            }
+        }
+        /// <summary>
+        /// Getting Multiple Filtered Records
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns><![CDATA[List<int> ListOfIds]]></returns>
+        /// <exception cref="Exception"></exception>
+        public static List<int> GetStudentIdsByUserName(string username)
+        {
+            try
+            {
+                if (objJSONService == null)
+                {
+                    objJSONService = new JsonServices<StudentModel>(jPath);
+                }
+                var students = objJSONService.GetAll();
+                if (!String.IsNullOrEmpty(username))
+                {
+                    var matchingStudents = students
+                        .Where(s => s.UserName.IndexOf(username, StringComparison.OrdinalIgnoreCase) >= 0)
+                        .Select(s => s.Id)
+                        .ToList();
+                    return matchingStudents;
+                }
+                return new List<int>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"\nDataAccess.DaStudent.GetStudentIdsByUserName()::{ex.Message}");
+            }
+        }
+        /// <summary>
+        /// Getting Multiple Filtered Records
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns><![CDATA[List<int> ListOfIds]]></returns>
+        /// <exception cref="Exception"></exception>
+        public static List<int> GetStudentIdsByEmail(string email)
+        {
+            try
+            {
+                if (objJSONService == null)
+                {
+                    objJSONService = new JsonServices<StudentModel>(jPath);
+                }
+                var students = objJSONService.GetAll();
+                if (!String.IsNullOrEmpty(email))
+                {
+                    var matchingStudents = students
+                        .Where(s => s.Email.IndexOf(email, StringComparison.OrdinalIgnoreCase) >= 0)
+                        .Select(s => s.Id)
+                        .ToList();
+                    return matchingStudents;
+                }
+                return new List<int>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"\nDataAccess.DaStudent.GetStudentIdsByEmail()::{ex.Message}");
+            }
+        }
+        public static StudentModel GetStudentById(int id)
+        {
+            try
+            {
+                if (objJSONService == null)
+                {
+                    objJSONService = new JsonServices<StudentModel>(jPath);
+                }
+                return objJSONService.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"DataAccess.DaStudent.GetStudentById()::{ex.Message}");
+            }
+        }
+        // ------------------------------------------------------------------------------------------------------------------
         public static int GetStudentIdByName(string name)
         {
             try
             {
+                if (objJSONService == null)
+                {
+                    objJSONService = new JsonServices<StudentModel>(jPath);
+                }
                 var students = objJSONService.GetAll();
-                var student = students.FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-                return student?.Id ?? -1;
+                if (!String.IsNullOrEmpty(name))
+                {
+                    var student = students.FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                    return student?.Id ?? -1;
+                }
+                return 0;
             }
             catch(Exception ex)
             {
+                return 0;
                 throw new Exception($"DataAccess.DaStudent.GetStudentIdByName()::{ex.Message}");
             }
         }
-
+        /// <summary>
+        /// To Get Student ID By Users Email Address
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns><![CDATA[int Id]]></returns>
+        /// <exception cref="Exception"></exception>
         public static int GetStudentIdByEmail(string email)
         {
             try
@@ -100,7 +214,7 @@ namespace DataAccess
             }
             catch(Exception ex)
             {
-                throw new Exception($"DataAccess.DaStudent.GetStudentIdByEmail()::{ex.Message}");
+                throw new Exception($"\nDataAccess.DaStudent.GetStudentIdByEmail()::{ex.Message}");
             }
         }
 
@@ -161,12 +275,16 @@ namespace DataAccess
         {
             try
             {
-                var Student_ = objJSONService.GetById(id);
+                StudentModel Student_ = objJSONService.GetById(id);
 
-                foreach(var item in Student_.ToString())
-                {
-                    Console.WriteLine(item);
-                }
+                string std_ = $"\n\t[ ID: {Student_.Id} ]";
+                std_ += $"\n\tStudent Name     : {Student_.Name}";
+                std_ += $"\n\tStudent UserName : {Student_.UserName}";
+                std_ += $"\n\tStudent Email    : {Student_.Email}";
+                std_ += $"\n\tStudent Age      : {Student_.Age.ToString()}\n";
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(std_);
+                Console.ResetColor();
             }
             catch(Exception ex)
             {
