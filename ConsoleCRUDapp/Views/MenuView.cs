@@ -12,15 +12,6 @@ namespace ConsoleCRUDapp.Views
 {
     public class MenuView
     {
-        public enum MENUSET
-        {
-            ADD = 0,
-            VIEWALL = 1,
-            VIEWONE = 2,
-            UPDATE = 3,
-            DELETE = 4
-        }
-
         public static readonly string[] StudentMenu = { "Manage Students", "View All Students", "View Student", "Add Student", "Update Student", "Delete Student" };
         public static readonly string[] TeacherMenu = { "Manage Teacher", "View All Teachers", "View Teacher", "Add Teacher", "Update Teacher", "Delete Teacher" };
         public static readonly string[] SchoolMenu = { "Manage School", "View All Schools", "View School", "Add School", "Update School", "Delete School" };
@@ -28,166 +19,41 @@ namespace ConsoleCRUDapp.Views
 
         public static void RootMenuDisplay()
         {
+            StudentViews.viewStudent objViews = new StudentViews.viewStudent();
             try
             {
-/*                while (true)
-                {*/
+                var menu = new Dictionary<string, Action>()
+                {
+                    { "1", objViews.ViewAllStudent },
+                    { "2", objViews.GetSingleStudent },
+                    { "3", objViews.CreateNewStudent },
+                    { "4", objViews.UpdateStudent },
+                    { "5", objViews.DeleteStudent },
+                    { "6", MenuView.Exit }
+                };
+                while (true)
+                {
                     ShowStudentMenu();
-                    int option_ = Int32.Parse(Console.ReadLine());
-                    
-                    switch (option_)
+                    var option_ = Console.ReadLine();
+
+                    if(menu.ContainsKey(option_))
                     {
-                        case 1:
-                            Console.Clear();
-                            Console.WriteLine("\n");
-                            Utilities.ConsoleUtility.ShowBanner("VIEW ALL STUDENTS", true, ConsoleColor.Cyan);
-                            Utilities.TableGenerator.DisplayStudentTable(DaStudent.ListAllStudents());
-                            break;
-                        case 2:
-                            Console.Clear();
-                            Utilities.ConsoleUtility.ShowBanner("VIEW STUDENT DETAILS", true, ConsoleColor.Cyan);
-                            Console.WriteLine("\tSearch and View from\n\tID / Name / Username / Email ::: [ 1 / 2 / 3 / 4 ]");
-                            int infoIndex = Int32.Parse(Console.ReadLine());
-
-                            if (infoIndex == 1 || infoIndex == 2 || infoIndex == 3 || infoIndex == 4)
-                            {
-                                Console.WriteLine("\n\tEnter student info you want to view:");
-                                string info = Console.ReadLine();
-
-                                int id = 0;
-                                if (infoIndex == 4)
-                                {
-                                    Console.Clear();
-                                    var studentIds = DaStudent.GetStudentIdsByEmail(info);
-                                    if (studentIds.Count > 1)
-                                    {
-                                        Utilities.ConsoleUtility.ShowBanner("MULTIPLE FILTERED STUDENTS FOUND");
-                                        Console.WriteLine("\tPlease select one:");
-                                        for (int i = 0; i < studentIds.Count; i++)
-                                        {
-                                            var student = DaStudent.GetStudentById(studentIds[i]);
-                                            Console.WriteLine($"\t[ {i + 1} ] {student.Name} \t {student.Email}");
-                                        }
-
-                                        Console.WriteLine("\n\t [ SELECT ] ");
-                                        int choice = Int32.Parse(Console.ReadLine()) - 1;
-                                        if (choice >= 0 && choice < studentIds.Count)
-                                        {
-                                            DaStudent.ShowStudent(studentIds[choice]);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Invalid choice.");
-                                        }
-                                    }
-                                    else if (studentIds.Count == 1)
-                                    {
-                                        DaStudent.ShowStudent(studentIds[0]);
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("No student found.");
-                                    }
-                                }
-                                else if (infoIndex == 3)
-                                {
-                                    Console.Clear();
-                                    var studentIds = DaStudent.GetStudentIdsByUserName(info);
-                                    if (studentIds.Count > 1)
-                                    {
-                                        Utilities.ConsoleUtility.ShowBanner("MULTIPLE FILTERED STUDENTS FOUND");
-                                        Console.WriteLine("\tPlease select one:");
-                                        for (int i = 0; i < studentIds.Count; i++)
-                                        {
-                                            var student = DaStudent.GetStudentById(studentIds[i]);
-                                            Console.WriteLine($"\t[ {i + 1} ] {student.Name} \t {student.UserName}");
-                                        }
-
-                                        Console.WriteLine("\n\t [ SELECT ] ");
-                                        int choice = Int32.Parse(Console.ReadLine()) - 1;
-                                        if (choice >= 0 && choice < studentIds.Count)
-                                        {
-                                            DaStudent.ShowStudent(studentIds[choice]);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Invalid choice.");
-                                        }
-                                    }
-                                    else if (studentIds.Count == 1)
-                                    {
-                                        DaStudent.ShowStudent(studentIds[0]);
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("No student found.");
-                                    }
-                                }
-                                else if (infoIndex == 2)
-                                {
-                                    Console.Clear();
-                                    var studentIds = DaStudent.GetStudentIdsByName(info);
-                                    if (studentIds.Count > 1)
-                                    {
-                                        Utilities.ConsoleUtility.ShowBanner("MULTIPLE FILTERED STUDENTS FOUND");
-                                        Console.WriteLine("\tPlease select one:");
-                                        for (int i = 0; i < studentIds.Count; i++)
-                                        {
-                                            var student = DaStudent.GetStudentById(studentIds[i]);
-                                            Console.WriteLine($"\t[ {i + 1} ] {student.Name}");
-                                        }
-
-                                        Console.WriteLine("\n\t [ SELECT ] ");
-                                        int choice = Int32.Parse(Console.ReadLine()) - 1;
-                                        if (choice >= 0 && choice < studentIds.Count)
-                                        {
-                                            DaStudent.ShowStudent(studentIds[choice]);
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Invalid choice.");
-                                        }
-                                    }
-                                    else if (studentIds.Count == 1)
-                                    {
-                                        DaStudent.ShowStudent(studentIds[0]);
-                                    }
-                                    else
-                                    {
-                                        Console.Clear();
-                                        Utilities.ConsoleUtility.ShowBanner("No student found.", true, ConsoleColor.Red);
-                                        Console.ResetColor();
-                                    }
-                                }
-                                else
-                                {
-                                    Console.Clear();
-                                    if (infoIndex == 1)
-                                    {
-                                        id = Int32.Parse(info);
-                                        DaStudent.ShowStudent(id);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                throw new Exception("#ERROR OCCURRED\n\tUser selected invalid option or trying to get invalid id of student !!!");
-                            }
-                            break;
-                    case 3:
-                        break;
-
-                    case 4:
-                        break;
-                    default:
-                        Console.WriteLine();
-                        break;
+                        Console.Clear();
+                        menu[option_].Invoke();
                     }
-                //}
+                    else
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"\n\n\t#ERROR\n\tInvalid option selected !!!!!");
+                        Console.ResetColor();
+                        Console.ReadLine();
+                    }
+                }
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception($"\nConsoleCRUDapp.Views.MenuView.RootMenuDisplay()::{ex.Message}");
             }
         }
 
@@ -211,6 +77,25 @@ namespace ConsoleCRUDapp.Views
             Console.WriteLine(menu);
             Console.SetCursorPosition(25, 11);
         }
-
+        
+        public static void Exit()
+        {
+            try
+            {
+                Console.Clear();
+                Console.WriteLine("\n\n");
+                Utilities.ConsoleUtility.ShowBanner("ARE YOU WANT TO EXIT ??");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\n\n\t\tPress 'Y' to Yes or 'N' to No:");
+                if(Convert.ToChar(Console.ReadLine()) == 'Y')
+                {
+                    Environment.Exit(0);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"\nConsoleCRUDapp.Views.MenuView.Exit()::{ex.Message}");
+            }
+        }
     }
 }

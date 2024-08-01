@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExamModel.cs" />
+    <Compile Include="GlobalModel.cs" />
     <Compile Include="SchoolModel.cs" />
     <Compile Include="StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

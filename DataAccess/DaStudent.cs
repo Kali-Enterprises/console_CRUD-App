@@ -1,41 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using MasterClass;
 
 namespace DataAccess
 {
     public class DaStudent
     {
-        private static string jPath = "students.json";
+        private static string jPath = "Students.json";
         public static StudentModel _stdModel;
         private static JsonServices<StudentModel> objJSONService = new JsonServices<StudentModel>(jPath);
-
+        public enum OPERATION
+        {
+            ADD = 11,
+            UPDATE = 12,
+            DELETE = 13
+        }
         /// <summary>
         /// Setting up the Student Data for next Manipulation
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static StudentModel SetStudentData()
+        public static StudentModel SetStudentData(OPERATION? operationType = OPERATION.ADD, int? id = 0)
         {
             _stdModel = new StudentModel();
             try
             {
-                Console.WriteLine($"\n\t[ Student Sr. No.: ");
-                _stdModel.Id = int.Parse(Console.ReadLine());
+                if(operationType == OPERATION.ADD)
+                {
+                    _stdModel.Id = GenerateNewStudentId();
+                    Console.WriteLine($"\n\tStudent Sr. No.: [ {_stdModel.Id} ]\n");
 
-                Console.WriteLine($"\n\t[ Student Name : ");
-                _stdModel.Name = Console.ReadLine();
+                    Console.WriteLine($"\n\tStudent Name : ");
+                    _stdModel.Name = Console.ReadLine();
 
-                Console.WriteLine($"\n\t[ Student Username (Must be unique): ");
-                _stdModel.UserName = Console.ReadLine();
+                    Console.WriteLine($"\n\tStudent Username (Must be unique): ");
+                    _stdModel.UserName = Console.ReadLine();
 
-                Console.WriteLine($"\n\t[ Student Email-Id : ");
-                _stdModel.Email = Console.ReadLine();
+                    Console.WriteLine($"\n\tStudent Email-Id : ");
+                    _stdModel.Email = Console.ReadLine();
 
-                Console.WriteLine($"\n\t[ Student Age : ");
-                _stdModel.Age = int.Parse(Console.ReadLine());
+                    Console.WriteLine($"\n\tStudent Age : ");
+                    _stdModel.Age = int.Parse(Console.ReadLine());
 
+                    // To Add New Record
+                    AddStudent(_stdModel);
+                }
+                else if(operationType == OPERATION.UPDATE)
+                {
+                    _stdModel.Id = (int)id;
+                    Console.WriteLine($"\n\tStudent Sr. No.: [ {_stdModel.Id} ]\n");
+
+                    Console.WriteLine($"\n\tStudent Name : ");
+                    _stdModel.Name = Console.ReadLine();
+
+                    Console.WriteLine($"\n\tStudent Username (Must be unique): ");
+                    _stdModel.UserName = Console.ReadLine();
+
+                    Console.WriteLine($"\n\tStudent Email-Id : ");
+                    _stdModel.Email = Console.ReadLine();
+
+                    Console.WriteLine($"\n\tStudent Age : ");
+                    _stdModel.Age = int.Parse(Console.ReadLine());
+                    UpdateStudent(_stdModel);
+                }
+                else if(operationType == OPERATION.DELETE)
+                {
+                    //
+                }
                 Console.ReadLine();
             }
             catch(Exception ex)
@@ -273,18 +308,31 @@ namespace DataAccess
         /// <exception cref="Exception"></exception>
         public static void ShowStudent(int id)
         {
+            StudentModel Student_ = new StudentModel();
             try
             {
-                StudentModel Student_ = objJSONService.GetById(id);
+                Student_ = objJSONService.GetById(id);
 
-                string std_ = $"\n\t[ ID: {Student_.Id} ]";
-                std_ += $"\n\tStudent Name     : {Student_.Name}";
-                std_ += $"\n\tStudent UserName : {Student_.UserName}";
-                std_ += $"\n\tStudent Email    : {Student_.Email}";
-                std_ += $"\n\tStudent Age      : {Student_.Age.ToString()}\n";
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(std_);
-                Console.ResetColor();
+                if(Student_ != null)
+                {
+                    string std_ = $"\n\t[ ID: {Student_.Id} ]";
+                    std_ += $"\n\tStudent Name     : {Student_.Name}";
+                    std_ += $"\n\tStudent UserName : {Student_.UserName}";
+                    std_ += $"\n\tStudent Email    : {Student_.Email}";
+                    std_ += $"\n\tStudent Age      : {Student_.Age.ToString()}\n";
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(std_);
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\n\n\tYour desired profile for ID : [ {id} ] is not available at this time...\n\n\n");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                }
             }
             catch(Exception ex)
             {
@@ -306,7 +354,11 @@ namespace DataAccess
                     _stdModel = _stdModel != null ? stdModel_ : throw new Exception("Object of Student is null or empty !!!!");
 
                     // Add a student to JSON file
-                    objJSONService.Add(_stdModel);
+                    bool isAdded = objJSONService.Add(_stdModel);
+                    if(isAdded)
+                    {
+                        MessageBox.Show($"New student record [ {stdModel_.Id} ] for student \"{stdModel_.Name}\" is added successfully.", GlobalModel.AppName_);
+                    }
                 }
                 else
                 {
@@ -314,7 +366,11 @@ namespace DataAccess
                     _stdModel = _stdModel != null ? stdModel_ : throw new Exception("Object of Student is null or empty !!!!");
 
                     // Add a student to JSON file
-                    objJSONService.Add(_stdModel);
+                    bool isAdded = objJSONService.Add(_stdModel);
+                    if(isAdded)
+                    {
+                        MessageBox.Show($"New student record [ {stdModel_.Id} ] for student \"{stdModel_.Name}\" is added successfully.", GlobalModel.AppName_);
+                    }
                 }
             }
             catch(Exception ex)
@@ -337,7 +393,15 @@ namespace DataAccess
                     _stdModel = _stdModel != null ? stdModel_ : throw new Exception("Object of Student is null or empty !!!!");
 
                     // Update a student to JSON file
-                    objJSONService.Update(_stdModel);
+                    bool isAdded = objJSONService.Update(_stdModel);
+                    if(isAdded)
+                    {
+                        MessageBox.Show($"Student record [ {stdModel_.Id} ] for student \"{stdModel_.Name}\" is updated successfully.", GlobalModel.AppName_);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"#ERROR\nStudent record [ {stdModel_.Id} ] for student \"{stdModel_.Name}\" is not updated.", GlobalModel.AppName_);
+                    }
                 }
                 else
                 {
@@ -345,7 +409,15 @@ namespace DataAccess
                     _stdModel = _stdModel != null ? stdModel_ : throw new Exception("Object of Student is null or empty !!!!");
 
                     // Update a student to JSON file
-                    objJSONService.Update(_stdModel);
+                    bool isAdded = objJSONService.Update(_stdModel);
+                    if(isAdded)
+                    {
+                        MessageBox.Show($"Student record [ {stdModel_.Id} ] for student \"{stdModel_.Name}\" is updated successfully.", GlobalModel.AppName_);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"#ERROR\nStudent record [ {stdModel_.Id} ] for student \"{stdModel_.Name}\" is not updated.", GlobalModel.AppName_);
+                    }
                 }
             }
             catch(Exception ex)

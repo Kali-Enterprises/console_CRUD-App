@@ -24,7 +24,19 @@ namespace DataAccess
         {
             try
             {
-                _filePath = filePath;
+                // Get the application root path
+                string appRootPath = AppDomain.CurrentDomain.BaseDirectory;
+
+                // Construct the full path to the file
+                _filePath = Path.Combine(appRootPath, "DATA", filePath);
+
+                // Ensure the directory exists
+                string directoryPath = Path.GetDirectoryName(_filePath);
+                if(!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                // _filePath = filePath;
             }
             catch (Exception ex)
             {
@@ -76,13 +88,21 @@ namespace DataAccess
         /// </summary>
         /// <param name="item"></param>
         /// <exception cref="Exception"></exception>
-        public void Add(T item)
+        public bool Add(T item)
         {
+            var items = GetAll();
             try
             {
-                var items = GetAll();
-                items.Add(item);
-                File.WriteAllText(_filePath, JsonConvert.SerializeObject(items, Formatting.Indented));
+                if(item != null)
+                {
+                    items.Add(item);
+                    File.WriteAllText(_filePath, JsonConvert.SerializeObject(items, Formatting.Indented));
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -95,7 +115,7 @@ namespace DataAccess
         /// </summary>
         /// <param name="item"></param>
         /// <exception cref="Exception"></exception>
-        public void Update(T item)
+        public bool Update(T item)
         {
             try
             {
@@ -105,6 +125,11 @@ namespace DataAccess
                 {
                     items[index] = item;
                     File.WriteAllText(_filePath, JsonConvert.SerializeObject(items, Formatting.Indented));
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception ex)

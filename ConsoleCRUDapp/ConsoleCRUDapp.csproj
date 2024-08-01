@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +50,7 @@
     <Compile Include="Utilities\ConsoleUtility.cs" />
     <Compile Include="Utilities\TableGenerator.cs" />
     <Compile Include="Views\MenuView.cs" />
+    <Compile Include="Views\StudentViews\viewStudent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -113,9 +115,7 @@
       <Name>MasterClass</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\StudentViews\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Utilities\ASCII_CharMap.txt" />
   </ItemGroup>
