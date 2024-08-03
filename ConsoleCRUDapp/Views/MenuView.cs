@@ -87,7 +87,10 @@ namespace ConsoleCRUDapp.Views
                 Utilities.ConsoleUtility.ShowBanner("ARE YOU WANT TO EXIT ??");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\n\n\t\tPress 'Y' to Yes or 'N' to No:");
-                if(Convert.ToChar(Console.ReadLine()) == 'Y')
+
+                Console.ResetColor();
+                char xOption = Convert.ToChar(Console.ReadLine());
+                if (xOption == 'Y' || xOption == 'y')
                 {
                     Environment.Exit(0);
                 }

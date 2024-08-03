@@ -118,6 +118,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Utilities\ASCII_CharMap.txt" />
+    <Content Include="Utilities\RAW_JSON.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

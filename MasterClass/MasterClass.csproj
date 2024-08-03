@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExamModel.cs" />
     <Compile Include="GlobalModel.cs" />
     <Compile Include="SchoolModel.cs" />
     <Compile Include="StudentModel.cs" />

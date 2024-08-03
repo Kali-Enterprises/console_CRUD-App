@@ -5,8 +5,15 @@ using MasterClass;
 
 namespace ConsoleCRUDapp
 {
+    /// <summary>
+    /// Entrypoint of Project
+    /// </summary>
     public class AppStarter
     {
+        /// <summary>
+        /// Entrypoint method || Driver code of Program
+        /// </summary>
+        /// <param name="args"></param>
         private static void Main(string[] args)
         {
 			try
@@ -32,6 +39,12 @@ namespace ConsoleCRUDapp
             }
         }
 
+        /// <summary>
+        /// To handle exit event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <exception cref="Exception"></exception>
         private static void OnExit(object sender, ConsoleCancelEventArgs args)
         {
             try

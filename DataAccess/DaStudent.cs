@@ -69,7 +69,11 @@ namespace DataAccess
                 }
                 else if(operationType == OPERATION.DELETE)
                 {
-                    //
+                    var prompt = MessageBox.Show("Are you sure you want to delete this record ?", GlobalModel.AppName_, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button3);
+                    if (prompt == DialogResult.Yes)
+                    {
+                        DeleteStudent((int)id);
+                    }
                 }
                 Console.ReadLine();
             }
@@ -431,46 +435,43 @@ namespace DataAccess
         /// </summary>
         /// <param name="stdModel_"></param>
         /// <exception cref="Exception"></exception>
-        public static void DeleteStudent(StudentModel stdModel_)
+        public static void DeleteStudent(int id_)
         {
             try
             {
                 if(objJSONService != null)
                 {
-                    _stdModel = _stdModel != null ? stdModel_ : throw new Exception("Object of Student is null or empty !!!!");
-
                     // Delete a student from JSON file
-                    var isDeleted = stdModel_ != null ? objJSONService.Delete(stdModel_.Id) : throw new Exception($"\n\tInvalid Record !!!\n\tPlease check further record...");
+                    var isDeleted = id_ >= 0 ? objJSONService.Delete(id_) : throw new Exception($"\n\tInvalid Record !!!\n\tPlease check further record...");
                     if(isDeleted)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"\n\tRecord for student [{stdModel_.Id}] :: [ {stdModel_.Name} ] is deleted successfully");
+                        Console.WriteLine($"\n\tRecord for student [{id_}] is deleted successfully");
                         Console.ResetColor();
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"\n\t#ERROR OCCURED\n\tRecord for student [{stdModel_.Id}] :: [ {stdModel_.Name} ] is not deleted");
+                        Console.WriteLine($"\n\t#ERROR OCCURED\n\tRecord for student [{id_} ] is deleted successfully");
                         Console.ResetColor();
                     }
                 }
                 else
                 {
                     objJSONService = new JsonServices<StudentModel>(jPath);
-                    _stdModel = _stdModel != null ? stdModel_ : throw new Exception("Object of Student is null or empty !!!!");
 
                     // Delete a student from JSON file
-                    var isDeleted = stdModel_ != null ? objJSONService.Delete(stdModel_.Id) : throw new Exception($"\n\tInvalid Record !!!\n\tPlease check further record...");
+                    var isDeleted = id_ >= 0 ? objJSONService.Delete(id_) : throw new Exception($"\n\tInvalid Record !!!\n\tPlease check further record...");
                     if(isDeleted)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"\n\tRecord for student [{stdModel_.Id}] :: [ {stdModel_.Name} ] is deleted successfully");
+                        Console.WriteLine($"\n\tRecord for student [{id_} ] is deleted successfully");
                         Console.ResetColor();
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"\n\t#ERROR OCCURED\n\tRecord for student [{stdModel_.Id}] :: [ {stdModel_.Name} ] is not deleted");
+                        Console.WriteLine($"\n\t#ERROR OCCURED\n\tRecord for student [{id_}  ] is deleted successfully");
                         Console.ResetColor();
                     }
                 }

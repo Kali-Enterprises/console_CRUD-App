@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DaExam.cs" />
     <Compile Include="DaSchool.cs" />
     <Compile Include="DaStudent.cs" />
     <Compile Include="DaTeacher.cs" />
