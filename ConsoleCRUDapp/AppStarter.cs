@@ -20,6 +20,7 @@ namespace ConsoleCRUDapp
 			{
                 // Set up event handler for Ctrl+C
                 Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
+
                 // Set up global exception handler
                 AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
 
